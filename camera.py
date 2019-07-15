@@ -16,6 +16,8 @@ class Camera(Component):
             success, image = self.video.read()
             # Enconde to jpeg
             ret, jpeg = cv2.imencode('.jpg', image)
+            cv2.imshow('image',image)
+            cv2.waitKey(0)
             return jpeg.tobytes()
 
 
