@@ -56,6 +56,8 @@ class Camera(Component):
         self.app = self.FlaskAppWrapper("myapp")
         self.app.add_endpoint(
             endpoint='/video', endpoint_name='video', handler=self.streamVideo)
+        self.app.add_endpoint(
+            endpoint='/', endpoint_name='', handler=self.index)
 
     def gen(self, camera):
         while True:
@@ -66,6 +68,9 @@ class Camera(Component):
     def streamVideo(self):
         return Response(self.gen(self.video),
                         mimetype='multipart/x-mixed-replace; boundary=frame')
+
+    def index(self):
+        return "Hello there"
 
     def run(self):
         self.setup()
