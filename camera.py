@@ -16,7 +16,7 @@ class Camera(Component):
         def __del__(self):
             self.video.release()
 
-        def change_res(width, height):
+        def change_res(self,width, height):
             self.video.set(3, width)
             self.video.set(4, height)
 
