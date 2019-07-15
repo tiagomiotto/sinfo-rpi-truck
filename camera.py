@@ -24,10 +24,10 @@ class Camera(Component):
             # Get frame
             success, image = self.video.read()
             # Enconde to jpeg
-            #ret, jpeg = cv2.imencode('.jpg', image)
+            ret, jpeg = cv2.imencode('.jpg', image)
             # TODO check erroneous bits on image
             # TODO use a lower resolution for faster tranfers
-            return image.tobytes()
+            return jpeg.tobytes()
 
     class FlaskAppWrapper(object):
         """
@@ -75,7 +75,7 @@ class Camera(Component):
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
             end = time.time()
             frames_per_sec = 1.0/(end-begin)
-            print("Frames per sec", frames_per_sec)
+            print("Frames per sec", int(frames_per_sec))
         
 
     def streamVideo(self):
