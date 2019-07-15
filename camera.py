@@ -10,9 +10,15 @@ class Camera(Component):
         def __init__(self):
             # Start camera with opencv
             self.video = cv2.VideoCapture(0)
+            self.video.set(3, 480)
+            self.video.set(4, 360)
 
         def __del__(self):
             self.video.release()
+
+        def change_res(width, height):
+            self.video.set(3, width)
+            self.video.set(4, height)
 
         def frame(self):
             # Get frame
