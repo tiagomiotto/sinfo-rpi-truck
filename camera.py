@@ -24,10 +24,10 @@ class Camera(Component):
             # Get frame
             success, image = self.video.read()
             # Enconde to jpeg
-            ret, jpeg = cv2.imencode('.jpg', image)
+            #ret, jpeg = cv2.imencode('.jpg', image)
             # TODO check erroneous bits on image
             # TODO use a lower resolution for faster tranfers
-            return jpeg.tobytes()
+            return image.tobytes()
 
     class FlaskAppWrapper(object):
         """
@@ -71,7 +71,6 @@ class Camera(Component):
         while True:
             begin = time.time()
             frame = camera.frame()
-            
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
             end = time.time()
