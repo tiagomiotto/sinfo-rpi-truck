@@ -26,7 +26,7 @@ class Camera(Component):
             # Get frame
             success, image = self.video.read()
             # Enconde to jpeg
-            cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # TODO testar PNG e grayscale
             ret, jpeg = cv2.imencode('.jpg', image)
             # TODO check erroneous bits on image
             # TODO use a lower resolution for faster tranfers
