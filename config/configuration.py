@@ -2,10 +2,10 @@
 
 # Broker configuration
 mqttBroker = "Your Broker IP"
-mqttPort = BrokerPort
+mqttPort = "BrokerPort"
 
 mqttUser = "Your Broker Username"
 mqttPasswd = "Your Broker Passoword"
 
 # Components configuration
-componentDic = {"camera", "Camera"}#"imuClass" : "Imu"}
+componentDic = {"camera": "Camera"}#"imuClass" : "Imu"}
