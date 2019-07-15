@@ -49,7 +49,7 @@ class Camera(Component):
 
         def add_endpoint(self, endpoint=None, endpoint_name=None, handler=None):
             self.app.add_url_rule(endpoint, endpoint_name,
-                                  self.EndpointAction(handler))
+                                  handler)
 
     def setup(self):
         self.video = self.VideoCamera()
@@ -71,7 +71,6 @@ class Camera(Component):
 
     def index(self):
         return "Hello there"
-
     def run(self):
         self.setup()
         self.app.run()
