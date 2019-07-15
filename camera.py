@@ -1,7 +1,7 @@
 from componentClass import Component
 import cv2
 from flask import Flask, render_template, Response
-
+import time
 
 class Camera(Component):
 
@@ -67,11 +67,17 @@ class Camera(Component):
             endpoint='/', endpoint_name='', handler=self.index)
 
     def gen(self, camera):
+        frames_per_sec =0
         while True:
-            print ("Hi")
+            begin = time.time()
             frame = camera.frame()
+            
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+            end = time.time()
+            frames_per_sec = 1.0/(end-begin)
+            print("Frames per sec", frames_per_sec)
+        
 
     def streamVideo(self):
         return Response(self.gen(self.video),
