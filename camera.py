@@ -67,15 +67,15 @@ class Camera(Component):
             endpoint='/', endpoint_name='', handler=self.index)
 
     def gen(self, camera):
-        frames_per_sec =0
+        self.frames_per_sec =0
         while True:
             begin = time.time()
             frame = camera.frame()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
             end = time.time()
-            frames_per_sec = 1.0/(end-begin)
-            print("Frames per sec", int(frames_per_sec))
+            self.frames_per_sec = 1.0/(end-begin)
+            print("Frames per sec", int(self.frames_per_sec))
         
 
     def streamVideo(self):
