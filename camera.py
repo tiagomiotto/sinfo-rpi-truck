@@ -10,8 +10,8 @@ class Camera(Component):
         def __init__(self):
             # Start camera with opencv
             self.video = cv2.VideoCapture(0)
-            self.video.set(3, 480)
-            self.video.set(4, 360)
+            self.video.set(3, 256)
+            self.video.set(4, 144)
 
         def __del__(self):
             self.video.release()
