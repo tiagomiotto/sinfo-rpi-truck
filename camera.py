@@ -65,4 +65,4 @@ class Camera(Component):
         return Response(self.gen(self.video),
                         mimetype='multipart/x-mixed-replace; boundary=frame')
     def run(self):
-        app.run()
+        self.app.run()

@@ -8,4 +8,4 @@ mqttUser = "Your Broker Username"
 mqttPasswd = "Your Broker Passoword"
 
 # Components configuration
-componentDic = {"imuClass" : "Imu"}
+componentDic = {"camera", "Camera"}#"imuClass" : "Imu"}
