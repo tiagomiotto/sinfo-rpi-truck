@@ -9,7 +9,7 @@ class Component:
 
     def __init__(self):
         self.mqttHandler = MqttClient()
-        self.mqttHandler.setup_client()
+        #self.mqttHandler.setup_client()
         
     # Component specific setup 
     # (Good practice to implement it, so it's well organized)
