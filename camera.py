@@ -10,8 +10,10 @@ class Camera(Component):
         def __init__(self):
             # Start camera with opencv
             self.video = cv2.VideoCapture(0)
-            self.video.set(3, 256)
-            self.video.set(4, 144)
+
+            #144p(256*144) gives roughly 30 fps
+            self.video.set(3, 427)
+            self.video.set(4, 240)
 
         def __del__(self):
             self.video.release()
