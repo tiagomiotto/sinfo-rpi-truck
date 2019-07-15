@@ -55,7 +55,7 @@ class Camera(Component):
     def setup(self):
         self.video = self.VideoCamera()
         self.app = self.FlaskAppWrapper("myapp")
-        self.app.add_endpoint("/","/",handler=self.streamVideo)
+        self.app.add_endpoint(endpoint='/video',endpoint_name='video',handler=self.streamVideo)
 
     def gen(self,camera):
         while True:
