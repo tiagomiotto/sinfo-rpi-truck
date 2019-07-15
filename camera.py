@@ -19,8 +19,8 @@ class Camera(Component):
             success, image = self.video.read()
             # Enconde to jpeg
             ret, jpeg = cv2.imencode('.jpg', image)
-            cv2.imshow('image', image)
-            cv2.waitKey(0)
+            # TODO check erroneous bits on image
+            # TODO use a lower resolution for faster tranfers
             return jpeg.tobytes()
 
     class FlaskAppWrapper(object):
@@ -30,7 +30,8 @@ class Camera(Component):
         """
         app = None
 
-        # Wrapper for the enpoint function that spits out code 200 if successful
+        # Wrapper for the enpoint function that 
+        # executes the action and spits out code 200 if successful
         class EndpointAction(object):
 
             def __init__(self, action):
