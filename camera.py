@@ -42,7 +42,7 @@ class Camera(Component):
             self.app = Flask(name)
 
         def run(self):
-            self.app.run()
+            self.app.run(host='0.0.0.0')
 
         def add_endpoint(self, endpoint=None, endpoint_name=None, handler=None):
             self.app.add_url_rule(endpoint, endpoint_name,
