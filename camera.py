@@ -61,7 +61,7 @@ class Camera(Component):
 
     def gen(self, camera):
         while True:
-            frame = camera.get_frame()
+            frame = camera.frame()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
@@ -70,7 +70,8 @@ class Camera(Component):
                         mimetype='multipart/x-mixed-replace; boundary=frame')
 
     def index(self):
-        return "Hello there"
+        return "Hello there, access the video at /video"
+
     def run(self):
         self.setup()
         self.app.run()
