@@ -11,16 +11,17 @@ class Camera(Component):
             # Start camera with opencv
             self.video = cv2.VideoCapture(0)
 
+        def __del__(self):
+            self.video.release()
+
         def frame(self):
             # Get frame
             success, image = self.video.read()
             # Enconde to jpeg
             ret, jpeg = cv2.imencode('.jpg', image)
-            cv2.imshow('image',image)
+            cv2.imshow('image', image)
             cv2.waitKey(0)
             return jpeg.tobytes()
-
-
 
     class FlaskAppWrapper(object):
         """
@@ -28,8 +29,8 @@ class Camera(Component):
         for Flask application formats
         """
         app = None
-        
-        # Wrapper for the enpoint function that spits out code 200 if successful 
+
+        # Wrapper for the enpoint function that spits out code 200 if successful
         class EndpointAction(object):
 
             def __init__(self, action):
@@ -50,22 +51,22 @@ class Camera(Component):
             self.app.add_url_rule(endpoint, endpoint_name,
                                   self.EndpointAction(handler))
 
-                        
-
     def setup(self):
         self.video = self.VideoCamera()
         self.app = self.FlaskAppWrapper("myapp")
-        self.app.add_endpoint(endpoint='/video',endpoint_name='video',handler=self.streamVideo)
+        self.app.add_endpoint(
+            endpoint='/video', endpoint_name='video', handler=self.streamVideo)
 
-    def gen(self,camera):
+    def gen(self, camera):
         while True:
             frame = camera.get_frame()
             yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
     def streamVideo(self):
         return Response(self.gen(self.video),
                         mimetype='multipart/x-mixed-replace; boundary=frame')
+
     def run(self):
         self.setup()
         self.app.run()
