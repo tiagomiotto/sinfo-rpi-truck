@@ -68,7 +68,7 @@ class Component:
             acquired = self.acquireData()
             if acquired is None:
                 loopcount+=1
-                print("None")
+                time.sleep(self.pollingRate)
                 continue
             samples.append(acquired)
 
