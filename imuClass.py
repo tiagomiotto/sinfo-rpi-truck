@@ -46,7 +46,7 @@ class Imu(Component):
         # Converted from mS to seconds
         self.pollingRate = self.imu.IMUGetPollInterval() * 1.0/ 500.0
 
-        self.change_sample_size(0.08)
+        self.change_sample_size(1)
         
 
     # Data Handling for this specific device, from collection to publishing to the correct MQTT Topics.
