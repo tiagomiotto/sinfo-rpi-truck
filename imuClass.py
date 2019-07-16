@@ -41,10 +41,11 @@ class Imu(Component):
         self.imu.setGyroEnable(True)
         self.imu.setAccelEnable(True)
         self.imu.setCompassEnable(True)
+        
 
         # Used to set up the polling interval of the sensor
         # Converted from mS to seconds
-        self.pollingRate = self.imu.IMUGetPollInterval() * 1.0/ 500.0
+        self.pollingRate = 400/self.imu.IMUGetPollInterval()
 
         self.change_sample_size(1)
         
