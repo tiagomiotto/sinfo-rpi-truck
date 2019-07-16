@@ -66,9 +66,10 @@ class Component:
             begin = time.time()
             # Acquire and store the sample if it is not None
             acquired = self.acquireData()
-            # if acquired is None:
-            #     loopcount+=1
-            #     continue
+            if acquired is None:
+                loopcount+=1
+                print("None")
+                continue
             samples.append(acquired)
 
             # Run the extra actions
