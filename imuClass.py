@@ -47,9 +47,9 @@ class Imu(Component):
         # The sampling rate of the IMU is 100hz, we need
         # to assume its a little slower to always get a hit 
         # when we go get the latest value
-        self.pollingRate = 1.0/(400/self.imu.IMUGetPollInterval())*1.1
+        self.pollingRate = 1.0/(400/self.imu.IMUGetPollInterval())*1.2
         print(self.pollingRate)
-        self.change_sample_size(0.11)
+        self.change_sample_size(0.12)
         
 
     # Data Handling for this specific device, from collection to publishing to the correct MQTT Topics.
