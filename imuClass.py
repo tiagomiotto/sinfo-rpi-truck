@@ -45,7 +45,7 @@ class Imu(Component):
 
         # Used to set up the polling interval of the sensor
         # Converted from mS to seconds
-        self.pollingRate = 400/self.imu.IMUGetPollInterval()
+        self.pollingRate = 1/(400/self.imu.IMUGetPollInterval())
 
         self.change_sample_size(1)
         
