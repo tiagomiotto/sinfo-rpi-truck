@@ -25,17 +25,12 @@ class Camera(Component):
         def frame(self):
             # Get frame
             success, image = self.video.read()
-            
-            grayFrame = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-            cv2.imshow('my webcam', grayFrame)
-            cv2.waitKey(1)
             # Enconde to jpeg
             # TODO testar PNG e grayscale
-            ret, jpg = cv2.imencode('.jpg', image)
+            #ret, jpg = cv2.imencode('.jpg', image)
             # TODO check erroneous bits on image
             # TODO use a lower resolution for faster tranfers
-            return jpg.tobytes()
+            return image.tobytes()
 
     class FlaskAppWrapper(object):
         """
