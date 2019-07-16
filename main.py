@@ -32,7 +32,7 @@ def start_components(my_components):
     p = {}
 
     for component in my_components:
-        p[component] = threading.Thread(target=my_components[component].run)
+        p[component] = threading.Thread(target=my_components[component].loop)
         print("Starting", component)
         p[component].daemon = True
         p[component].start()
