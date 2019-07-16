@@ -1,8 +1,8 @@
 
 
-def default(self,data):
+def default(data):
     return data[-1]
-    
-def median(self,data):
+
+def median(data):
     pass
 
