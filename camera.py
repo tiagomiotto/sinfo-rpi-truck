@@ -12,8 +12,8 @@ class Camera(Component):
             self.video = cv2.VideoCapture(0)
 
             #144p(256*144) gives roughly 30 fps
-            self.video.set(3, 427)
-            self.video.set(4, 240)
+            self.video.set(3, 256)
+            self.video.set(4, 144)
             fps = self.video.get(cv2.CAP_PROP_FPS)
             print "Frames : {0}".format(fps)
 
