@@ -10,6 +10,9 @@ class Component:
     def __init__(self):
         self.mqttHandler = MqttClient()
         self.mqttHandler.setup_client()
+
+        self.pollingRate = 1
+        self.loopCycles = 1
         
     # Component specific setup 
     # (Good practice to implement it, so it's well organized)

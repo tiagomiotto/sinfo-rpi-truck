@@ -28,16 +28,21 @@ def get_components():
     return my_components
 
 # Create a thread to run each component
-def start_components(my_components):
-    p = {}
-
+def get_max_min_poll_rate(my_components):
+    max_rate = -1.0
+    min_rate = 1000.0
     for component in my_components:
-        p[component] = threading.Thread(target=my_components[component].run)
-        print("Starting", component)
-        p[component].daemon = True
-        p[component].start()
-        time.sleep(1)
-    return p
+        if component.pollingRate <= min_rate:
+            min_rate = component.pollingRate
+
+        if component.pollingRate >= max_rate:
+            max_rate = component.pollingRate
+        
+    return max_rate,min_rate
+
+def calculate_loop_cycles(my_components,min_rate):
+   for component in my_components:
+       component.loopCycles = int(component.pollingRate / min_rate)
 
 # Wait for all the proccesses to finish (shouldn't get here
 # since they run in a loop)
@@ -50,12 +55,26 @@ def wait_components_finish(p):
 def main():
     signal.signal(signal.SIGINT, signal_handler)
     my_components = get_components()
-    proc = start_components(my_components)
+    
+    max_rate,min_rate = get_max_min_poll_rate(my_components)
+    max_loops = int(max_rate/min_rate)
+    calculate_loop_cycles(my_components,min_rate)
+    loopcount =0
+    while True:
+        begin = time.time()
+        timestamp = begin*1000000 #microseconds
+        for component in my_components:
+            if component.loopCycles <= loopcount:
+                component.handleData(timestamp)
+        loopcount+=1
+        time.sleep(min_rate-(begin-time.time()))
+        if loopcount > max_loops:
+            loopcount=0
     # Used for testing purpouses to kill the program with ctrl + c
     # by force (not ideal)
     # while True:
     #     time.sleep(3)
-    wait_components_finish(proc)
+
     sys.exit(0)
 
 
