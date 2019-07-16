@@ -44,28 +44,15 @@ class Imu(Component):
 
         # Used to set up the polling interval of the sensor
         # Converted from mS to seconds
-        self.poll_interval = self.imu.IMUGetPollInterval() * 1.0/ 1000.0
-        self.my_topic = "truck1/imu"
+        self.pollingRate = self.imu.IMUGetPollInterval() * 1.0/ 1000.0
+        
 
     # Data Handling for this specific device, from collection to publishing to the correct MQTT Topics.
     def handleData(self):
-        data = self.imu.getIMUData()
-        self.mqttHandler.publish(self.my_topic, json.dumps(self.gen_payload_message(data)),retain=True)
-
-    # Specific run behaviour of this component
-    def run(self):
-        """
-        In this case it basically checks if the sensor has produced new data and
-        then tries to poll it, afterwards it waits for the appropriate ammount of time
-        before trying again
-        """
-        self.setup()
-        self.mqttHandler.publish(
-            (self.my_topic+"/pollRate"), self.poll_interval, retain=True)
-        while True:
-            if self.imu.IMURead():
-                self.handleData()
-                time.sleep(self.poll_interval)
+        if self.imu.IMURead():
+            data = self.imu.getIMUData()
+            return data
+        return None
 
     def gen_payload_message(self, data):
         try:
