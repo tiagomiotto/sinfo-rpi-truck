@@ -52,7 +52,7 @@ def main():
     my_components = get_components()
     proc = start_components(my_components)
     #Used for testing purpouses to kill the program with ctrl + c
-    by force (not ideal)
+    #by force (not ideal)
     while True:
         time.sleep(3)
     wait_components_finish(proc)
