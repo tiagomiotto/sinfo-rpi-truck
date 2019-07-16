@@ -68,7 +68,7 @@ class Component:
             acquired = self.acquireData()
             if acquired is None:
                 continue
-            samples.apend(acquired)
+            samples.append(acquired)
 
             # Run the extra actions
             self.run()
