@@ -87,6 +87,7 @@ class Component:
             end = time.time()
             # Sleep the polling rate - elapsed time on calculations
             if (end-begin)<self.pollingRate:
+                print(self.pollingRate-(end-begin))
                 time.sleep(self.pollingRate-(end-begin))
 
     # Component specific setup
