@@ -32,10 +32,12 @@ class Component:
         # Transformation to be done on the samples acquired
         self.transformation = getattr(transformations, 'default')
 
+
     # Used to change the number of samples during runtime
     def change_sample_size(self, newSampRate):
         self.samplingRate = newSampRate
         self.numberOfSamples = self.samplingRate / self.pollingRate
+        
 
     # Set the transformation for the collected samples
     # from the ones available in the transformations class
@@ -64,7 +66,7 @@ class Component:
             acquired = self.acquireData()
             if acquired is None:
                 continue
-            samples[loopcount] = acquired
+            samples.append(acquired)
 
             # Run the extra actions
             self.run()
@@ -78,6 +80,7 @@ class Component:
                 self.mqttHandler.publish(
                     self.pubTopic, json.dumps(self.gen_payload_message(dataToSend)))
                 loopcount = 0
+                samples[:] =[] # clear the samples
 
             time.sleep(self.pollingRate)
 
