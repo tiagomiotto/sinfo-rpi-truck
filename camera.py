@@ -25,7 +25,10 @@ class Camera(Component):
         def frame(self):
             # Get frame
             success, image = self.video.read()
-            cv2.imshow('my webcam', image)
+            
+            grayFrame = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+            cv2.imshow('my webcam', grayFrame)
             cv2.waitKey(1)
             # Enconde to jpeg
             # TODO testar PNG e grayscale
