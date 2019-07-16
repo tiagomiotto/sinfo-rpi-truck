@@ -36,7 +36,7 @@ class Component:
     # Used to change the number of samples during runtime
     def change_sample_size(self, newSampRate):
         self.samplingRate = newSampRate
-        self.numberOfSamples = self.samplingRate / self.pollingRate
+        self.numberOfSamples = int(self.samplingRate / self.pollingRate)
         
 
     # Set the transformation for the collected samples
