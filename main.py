@@ -19,10 +19,10 @@ def get_components():
         # Imports the name of the class and creates an object
         mod = __import__(key, fromlist=[componentDic.get(key)])
         klass = getattr(mod, componentDic.get(key))
-        aux_component = klass()
+        aux_component = klass((rootTopic + '/' + componentDic.get(key)))
         # Ignores objects which are not Components
         if isinstance(aux_component, Component):
-            my_components[key] = klass((rootTopic + '/' + componentDic.get(key)))
+            my_components[key] = aux_component
         else:
             print("It's not a valid component")
     return my_components
