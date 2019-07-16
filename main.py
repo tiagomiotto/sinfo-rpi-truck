@@ -23,6 +23,8 @@ def get_components():
         # Ignores objects which are not Components
         if isinstance(aux_component, Component):
             my_components[key] = klass()
+            my_components[key].setup()
+
         else:
             print("It's not a valid component")
     return my_components
