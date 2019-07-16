@@ -1,4 +1,4 @@
-from config.configuration import componentDic
+from config.configuration import componentDic, rootTopic
 from componentClass import Component
 import multiprocessing as mp
 import threading
@@ -22,7 +22,7 @@ def get_components():
         aux_component = klass()
         # Ignores objects which are not Components
         if isinstance(aux_component, Component):
-            my_components[key] = klass()
+            my_components[key] = klass((rootTopic + '/' + componentDic.get(key)))
         else:
             print("It's not a valid component")
     return my_components
