@@ -45,6 +45,8 @@ class Imu(Component):
         # Used to set up the polling interval of the sensor
         # Converted from mS to seconds
         self.pollingRate = self.imu.IMUGetPollInterval() * 1.0/ 1000.0
+
+        self.change_sample_size(1)
         
 
     # Data Handling for this specific device, from collection to publishing to the correct MQTT Topics.
