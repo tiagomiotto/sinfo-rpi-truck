@@ -32,17 +32,17 @@ def get_max_min_poll_rate(my_components):
     max_rate = -1.0
     min_rate = 1000.0
     for component in my_components:
-        if component.pollingRate <= min_rate:
-            min_rate = component.pollingRate
+        if my_components[component].pollingRate <= min_rate:
+            min_rate = my_components[component].pollingRate
 
-        if component.pollingRate >= max_rate:
-            max_rate = component.pollingRate
+        if my_components[component].pollingRate >= max_rate:
+            max_rate = my_components[component].pollingRate
         
     return max_rate,min_rate
 
 def calculate_loop_cycles(my_components,min_rate):
    for component in my_components:
-       component.loopCycles = int(component.pollingRate / min_rate)
+       my_components[component].loopCycles = int(my_components[component].pollingRate / min_rate)
 
 # Wait for all the proccesses to finish (shouldn't get here
 # since they run in a loop)
@@ -64,8 +64,8 @@ def main():
         begin = time.time()
         timestamp = begin*1000000 #microseconds
         for component in my_components:
-            if component.loopCycles <= loopcount:
-                component.handleData(timestamp)
+            if my_components[component].loopCycles <= loopcount:
+                my_components[component].handleData(timestamp)
         loopcount+=1
         time.sleep(min_rate-(begin-time.time()))
         if loopcount > max_loops:
