@@ -54,7 +54,13 @@ class Imu(Component):
         if self.imu.IMURead():
             data = self.imu.getIMUData()
             return data
-        return None
+        # Else return None
+        return {
+                'accel': (None,None,None),
+                'gyro': (None,None,None),
+                # Note: This is a UNIX timestamp in microseconds
+                'timestamp': 0
+            }
 
     def gen_payload_message(self, data):
         try:
