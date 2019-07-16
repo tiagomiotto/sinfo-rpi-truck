@@ -48,7 +48,7 @@ class Imu(Component):
         
 
     # Data Handling for this specific device, from collection to publishing to the correct MQTT Topics.
-    def handleData(self):
+    def acquireData(self):
         if self.imu.IMURead():
             data = self.imu.getIMUData()
             return data
