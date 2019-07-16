@@ -37,6 +37,7 @@ class Component:
     def change_sample_size(self, newSampRate):
         self.samplingRate = newSampRate
         self.numberOfSamples = int(self.samplingRate / self.pollingRate)
+        print("Number of samples", self.numberOfSamples )
         
 
     # Set the transformation for the collected samples
