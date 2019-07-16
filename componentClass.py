@@ -63,6 +63,7 @@ class Component:
         self.setup()
         samples = []
         while True:
+            begin = time.time()
             # Acquire and store the sample if it is not None
             acquired = self.acquireData()
             if acquired is None:
@@ -83,7 +84,10 @@ class Component:
                 loopcount = 0
                 samples[:] =[] # clear the samples
 
-            time.sleep(self.pollingRate)
+            end = time.time()
+            # Sleep the polling rate - elapsed time on calculations
+            if (end-begin)<self.pollingRate:
+                time.sleep(self.pollingRate-(end-begin))
 
     # Component specific setup
     # Is run before the loop starts
