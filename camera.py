@@ -25,7 +25,8 @@ class Camera(Component):
         def frame(self):
             # Get frame
             success, image = self.video.read()
-            cv2.imshow('my webcam', image)
+            if success:
+                cv2.imshow('my webcam', image)
             # Enconde to jpeg
             # TODO testar PNG e grayscale
             ret, jpg = cv2.imencode('.jpg', image)
