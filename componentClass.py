@@ -66,8 +66,8 @@ class Component:
             begin = time.time()
             # Acquire and store the sample if it is not None
             acquired = self.acquireData()
-            if acquired is None:
-                continue
+            # if acquired is None:
+            #     continue
             samples.append(acquired)
 
             # Run the extra actions
@@ -87,7 +87,6 @@ class Component:
             end = time.time()
             # Sleep the polling rate - elapsed time on calculations
             if (end-begin)<self.pollingRate:
-                print(self.pollingRate-(end-begin))
                 time.sleep(self.pollingRate-(end-begin))
 
     # Component specific setup
