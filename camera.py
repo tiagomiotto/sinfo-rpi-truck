@@ -27,10 +27,10 @@ class Camera(Component):
             success, image = self.video.read()
             # Enconde to jpeg
             # TODO testar PNG e grayscale
-            ret, jpeg = cv2.imencode('.jpg', image)
+            ret, png = cv2.imencode('.png', image)
             # TODO check erroneous bits on image
             # TODO use a lower resolution for faster tranfers
-            return jpeg.tobytes()
+            return png.tobytes()
 
     class FlaskAppWrapper(object):
         """
