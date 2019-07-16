@@ -27,7 +27,7 @@ class Camera(Component):
             success, image = self.video.read()
             # Enconde to jpeg
             # TODO testar PNG e grayscale
-            ret, jpg = cv2.imencode('.png', image)
+            ret, jpg = cv2.imencode('.jpg', image)
             # TODO check erroneous bits on image
             # TODO use a lower resolution for faster tranfers
             return jpg.tobytes()
@@ -74,8 +74,7 @@ class Camera(Component):
         while True:
             begin = time.time()
             frame = camera.frame()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+            yield (frame)
             end = time.time()
             frames_per_sec = 1.0/(end-begin)
             print("Frames per sec", int(frames_per_sec))
