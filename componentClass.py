@@ -61,7 +61,7 @@ class Component:
     def loop(self):
         loopcount = 0
         self.setup()
-        samples = [0] * self.numberOfSamples
+        samples = [None] * self.numberOfSamples
         while True:
             begin = time.time()
             # Acquire and store the sample if it is not None
