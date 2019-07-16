@@ -60,6 +60,7 @@ class Component:
     # setup and data acquisition methods
     def loop(self):
         loopcount = 0
+        nonecount =0
         self.setup()
         samples = []
         while True:
@@ -68,6 +69,8 @@ class Component:
             acquired = self.acquireData()
             if acquired is None:
                 loopcount+=1
+                nonecount+=1
+                print(nonecount)
                 end = time.time()
                 # Sleep the polling rate - elapsed time on calculations
                 if (end-begin)<self.pollingRate:
