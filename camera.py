@@ -12,8 +12,10 @@ class Camera(Component):
             self.video = cv2.VideoCapture(0)
 
             #144p(256*144) gives roughly 30 fps
-            self.video.set(3, 256)
-            self.video.set(4, 144)
+            self.video.set(3, 1920)
+            self.video.set(4, 1080)
+            fps = self.video.get(cv2.CAP_PROP_FPS)
+            print "Frames : {0}".format(fps)
 
         def __del__(self):
             self.video.release()
@@ -28,8 +30,6 @@ class Camera(Component):
             # Enconde to jpeg
             # TODO testar PNG e grayscale
             ret, jpg = cv2.imencode('.jpg', image)
-            fps = self.video.get(cv2.CAP_PROP_FPS)
-            print "Frames : {0}".format(fps)
             # TODO check erroneous bits on image
             # TODO use a lower resolution for faster tranfers
             return jpg.tobytes()
@@ -72,15 +72,11 @@ class Camera(Component):
             endpoint='/', endpoint_name='', handler=self.index)
 
     def gen(self, camera):
-        frames_per_sec =0
         while True:
-            begin = time.time()
             frame = camera.frame()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-            end = time.time()
-            frames_per_sec = 1.0/(end-begin)
-            print("Frames per sec", int(frames_per_sec))
+
         
 
     def streamVideo(self):
