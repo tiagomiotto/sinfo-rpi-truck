@@ -56,12 +56,6 @@ class Imu(Component):
             return data
         # Else return None
         return None
-        # {
-        #         'accel': (None,None,None),
-        #         'gyro': (None,None,None),
-        #         # Note: This is a UNIX timestamp in microseconds
-        #         'timestamp': 0
-        #     }
 
     def gen_payload_message(self, data):
         try:

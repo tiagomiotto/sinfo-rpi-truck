@@ -68,9 +68,13 @@ class Component:
             acquired = self.acquireData()
             if acquired is None:
                 loopcount+=1
-                time.sleep(self.pollingRate)
+                end = time.time()
+                # Sleep the polling rate - elapsed time on calculations
+                if (end-begin)<self.pollingRate:
+                    time.sleep(self.pollingRate-(end-begin))
                 continue
-            samples.append(acquired)
+            else:
+                samples.append(acquired)
 
             # Run the extra actions
             self.run()
