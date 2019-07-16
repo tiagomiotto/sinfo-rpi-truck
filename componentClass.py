@@ -79,7 +79,7 @@ class Component:
             loopcount += 1
 
             # When the required samples have been acquired transform and send
-            if loopcount == self.numberOfSamples:
+            if loopcount >= self.numberOfSamples:
                 dataToSend = self.transformation(samples)
                 self.mqttHandler.publish(
                     self.pubTopic, json.dumps(self.gen_payload_message(dataToSend)))
