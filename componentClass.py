@@ -91,6 +91,7 @@ class Component:
                 self.mqttHandler.publish(
                     self.pubTopic, json.dumps(self.gen_payload_message(dataToSend)))
                 loopcount = 0
+                nonecount=0
                 samples = [] # clear the samples
 
             end = time.time()
