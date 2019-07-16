@@ -68,7 +68,7 @@ class Component:
             acquired = self.acquireData()
             if acquired is None:
                 continue
-            samples[loopcount]=acquired
+            samples.add(acquired)
 
             # Run the extra actions
             self.run()
@@ -82,7 +82,7 @@ class Component:
                 self.mqttHandler.publish(
                     self.pubTopic, json.dumps(self.gen_payload_message(dataToSend)))
                 loopcount = 0
-                samples[:] =[] # clear the samples
+                samples = set() # clear the samples
 
             end = time.time()
             # Sleep the polling rate - elapsed time on calculations
