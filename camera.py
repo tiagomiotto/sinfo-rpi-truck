@@ -12,8 +12,8 @@ class Camera(Component):
             self.video = cv2.VideoCapture(0)
 
             #144p(256*144) gives roughly 30 fps
-            self.video.set(3, 427)
-            self.video.set(4, 240)
+            self.video.set(3, 256)
+            self.video.set(4, 144)
 
         def __del__(self):
             self.video.release()
@@ -27,10 +27,10 @@ class Camera(Component):
             success, image = self.video.read()
             # Enconde to jpeg
             # TODO testar PNG e grayscale
-            ret, png = cv2.imencode('.png', image)
+            ret, jpg = cv2.imencode('.jpg', image)
             # TODO check erroneous bits on image
             # TODO use a lower resolution for faster tranfers
-            return png.tobytes()
+            return jpg.tobytes()
 
     class FlaskAppWrapper(object):
         """
