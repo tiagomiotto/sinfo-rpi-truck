@@ -13,7 +13,7 @@ class Component:
         self.mqttHandler = MqttClient()
         self.mqttHandler.setup_client()
 
-        # Rate in which data is send to the cloud in ms
+        # Rate in which data is send to the cloud in s
         self.samplingRate = 1
 
         # Rate in which you acquire data from the sensor in ms
