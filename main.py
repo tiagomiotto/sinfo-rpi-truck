@@ -29,7 +29,6 @@ def get_components():
             print("It's not a valid component")
     return my_components
 
-# Create a thread to run each component
 def get_max_min_poll_rate(my_components):
     max_rate = -1.0
     min_rate = 1000.0
@@ -47,13 +46,6 @@ def calculate_loop_cycles(my_components,min_rate):
        my_components[component].loopCycles = int(my_components[component].pollingRate / min_rate)
        print(component , my_components[component].loopCycles)
 
-# Wait for all the proccesses to finish (shouldn't get here
-# since they run in a loop)
-def wait_components_finish(p):
-    print("Waiting for threads to finish")
-    for component in p:
-        p.get(component).join()
-
 # Main behaviour
 def main():
     signal.signal(signal.SIGINT, signal_handler)
@@ -63,10 +55,11 @@ def main():
     max_loops = int(max_rate/min_rate)
     calculate_loop_cycles(my_components,min_rate)
     print(max_rate,min_rate,max_loops)
+    
     loopcount =0
     while True:
         begin = time.time()
-        timestamp = begin*1000000 #microseconds
+        timestamp = int(begin*1000000) #microseconds
         for component in my_components:
             if my_components[component].loopCycles <= loopcount:
                 my_components[component].handleData(timestamp)
@@ -74,10 +67,6 @@ def main():
         time.sleep(min_rate-(begin-time.time()))
         if loopcount > max_loops:
             loopcount=0
-    # Used for testing purpouses to kill the program with ctrl + c
-    # by force (not ideal)
-    # while True:
-    #     time.sleep(3)
 
     sys.exit(0)
 
