@@ -67,10 +67,13 @@ def main():
     while True:
         begin = time.time()
         timestamp = int(begin*1000000) #microseconds
+        
         for key,component in my_components.iteritems():
             if component.loopCycles <= loopcount:
-                threading.Thread(target=component.handleData,args=(timestamp,))
-                
+                p=threading.Thread(target=component.handleData,args=(timestamp,))
+                p.daemon = True
+                p.start()
+
         loopcount+=1
         time.sleep(min_rate-(begin-time.time()))
         if loopcount > max_loops:
