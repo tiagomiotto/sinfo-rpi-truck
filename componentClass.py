@@ -10,7 +10,7 @@ class Component:
 
     def __init__(self,root):
         self.mqttHandler = MqttClient()
-        self.mqttHandler.setup_client()
+        self.mqttHandler.setup_client_azure()
 
         self.name= "component"
         self.pollingRate = 1
