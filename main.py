@@ -5,7 +5,7 @@ import threading
 import signal
 import sys
 import time
-
+import math
 
 # CTRl+C handler to exit the program properly
 def signal_handler(sig, frame):
@@ -77,7 +77,7 @@ def main():
     # the number of cycles of the slowest component in order
     # to reset the counter
     max_rate, min_rate = get_max_min_poll_rate(my_components)
-    max_loops = int(max_rate/min_rate)
+    max_loops = math.ceil((max_rate/min_rate))
     update_loop_cycles(my_components, min_rate, time.time()*1000000)
     print "Loop speed: {} || Maximum number of cycles {} ".format(
         min_rate, max_loops)

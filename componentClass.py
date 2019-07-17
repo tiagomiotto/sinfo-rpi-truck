@@ -2,6 +2,7 @@ from mqttClient import MqttClient
 from abc import ABCMeta, abstractmethod
 import sys,signal
 import json
+import math 
 
 class Component:
 
@@ -54,7 +55,7 @@ class Component:
     # the new configuration parameters of the component
     def calculate_loop_cycles(self,loop_rate,timestamp):
         self.loopRate = loop_rate
-        self.loopCycles = int(self.pollingRate / self.loopRate)
+        self.loopCycles = int(math.ceil(self.pollingRate / self.loopRate))
         self.publishConfiguration(int(timestamp))
 
 
@@ -64,7 +65,7 @@ class Component:
         self.mqttHandler.publish(self.my_topic+"/config", json.dumps(
             self.gen_curr_configuration_message(timestamp)), retain=True)
     
-    
+
     # Generate current configuration message
     def gen_curr_configuration_message(self,timestamp):
        return {
