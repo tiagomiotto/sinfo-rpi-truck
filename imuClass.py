@@ -61,7 +61,7 @@ class Imu(Component):
         if self.imu.IMURead():
             data = self.imu.getIMUData()
   
-            self.mqttHandler.publish(self.my_topic, json.dumps(self.gen_payload_message(data,timestamp)),retain=True, qos=1)
+            self.mqttHandler.publish(self.my_topic, json.dumps(self.gen_payload_message(data,timestamp)), qos=1)
     
 
     # Generates the payload specific to the IMU
