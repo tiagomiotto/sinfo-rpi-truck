@@ -134,7 +134,7 @@ And the [main.py](main.py) will import it, create the object and invoke the **ru
 
 **Note:** The effect this has on reading several sensors has yet to be tested, although it shouldn't be a problem due to the quad core nature of the Rpi3B+.
 
-#### The components topic:
+#### The root/components topic:
 
 The [componentClass](componentClass.py) provides a method to publish a JSON with information related to the configuration of the component to the topic **root/components**. This method is called after they are setup in the [main.py](main.py), so you can check the information for all the current components running on that system by subscribing to that topic.
 

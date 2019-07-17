@@ -64,7 +64,7 @@ class Component:
     # root/component/config topic
     def publishConfiguration(self,timestamp):
         self.mqttHandler.publish(self.config_topic, json.dumps(
-            self.gen_curr_configuration_message(timestamp)), retain=True)
+            self.gen_curr_configuration_message(timestamp)))
     
 
     # Generate current configuration message
@@ -77,3 +77,8 @@ class Component:
            'cycles': self.loopCycles,
            'timestamp': timestamp
        }
+    
+    # Set component topic
+    def set_topic(self,component_name):
+        self.name=component_name
+        self.my_topic = self.rootTopic + "/" + self.name
