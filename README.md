@@ -361,32 +361,46 @@ get_adc = {
 ---
 
 ### Setting up the Camera
+
 Still not implemented
 
 ---
 
 ### Setting up the Proximity Sensors
+
 Still not implemented
 
 ---
-## Running the program
+
+### Running the program
+
 After all the setting up is done just run [main.py](main.py) like
 ```
 python main.py
 ```
 
 ---
+
+### Worth noting
+
+The sampling rate defined for the components is not precise, there is always an error of around +2% on the actual sampling interval. For example, the system is supposed to read and publish the IMU values every 12ms, but the delta between two timestamps is not 12ms, but something around 12.11ms. Using higher sampling intervals such as 1 second yields similar results of around 1-2% error. This may be an issue related to the way the scheduler of the RPi OS functions.
+
+Another thing worth noting is that it takes roughly 0.04ms to poll data from the IMU.
+
+---
+
 ### Worth checking:
 
 [Setting up a script to run on Rpi Boot](http://pi.bek.no/autostartProgramOnBoot/)
 
 ---
+
 ### Contributing
 
 Review [the contributing guidelines](CONTRIBUTING.md) before you make your awesome contribution
 
-
 ---
+
 ### License
 
 This project is licensed under the terms of the MIT license. See [LICENSE](LICENSE)]
