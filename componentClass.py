@@ -57,6 +57,7 @@ class Component:
     # Generate current configuration message
     def gen_curr_configuration_message(self,timestamp):
        return {
+           'name': self.name,
            'topic': self.my_topic,
            'pollRate': self.pollingRate,
            'loopRate': self.loopRate,
