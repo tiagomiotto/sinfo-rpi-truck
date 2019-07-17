@@ -26,6 +26,7 @@ class Component:
     def setup(self):
         pass
 
+
     # Component specific data handling and MQTT publishing 
     # It should receive the main timestamp to stamp the package
     # in order to ensure coherence between components.
@@ -35,10 +36,18 @@ class Component:
     def handleData(self,timestamp):
         pass
     
+
+    # Run code for components which are suposed to loop in paralel
+    # and do not require data acquisition, such as the camera
+    def run(self):
+        pass
+
+
     # Component specific setup JSON payload generation
     # (Good practice to implement it, so it's well organized)
     def gen_payload_message(self, data,timestamp):
         pass
+
 
     # Calculate the number of loop cycles before sampling the 
     # sensor based on the rate the loop is run and publish
@@ -48,11 +57,13 @@ class Component:
         self.loopCycles = int(self.pollingRate / self.loopRate)
         self.publishConfiguration(int(timestamp))
 
+
     # Publish component configuration values to the
     # root/component/config topic
     def publishConfiguration(self,timestamp):
         self.mqttHandler.publish(self.my_topic+"/config", json.dumps(
             self.gen_curr_configuration_message(timestamp)), retain=True)
+    
     
     # Generate current configuration message
     def gen_curr_configuration_message(self,timestamp):

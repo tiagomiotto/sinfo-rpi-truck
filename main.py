@@ -25,14 +25,15 @@ def get_components():
         # Ignores objects which are not Components
         if isinstance(aux_component, Component):
             my_components[key] = klass()
+            my_components[key].setup()
 
             # The use of threads here is mainly in the case of components that should
-            # run in a parallel loop, such as the camera, and they can do so in
-            # their setup
-            # Otherwise, in the case of data acquiring components, there should be no loops
-            # in the setup
+            # run in a parallel loop, such as the camera, and they can do so by
+            # implementing the run function. This shouldn't be the used for 
+            # components such as sensors, since their data aquisition is done
+            # in the main loop
             p = threading.Thread(
-                target=my_components[key].setup)
+                target=my_components[key].run)
             p.daemon = True
             p.start()
 
