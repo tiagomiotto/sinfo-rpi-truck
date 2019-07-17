@@ -12,9 +12,8 @@ def signal_handler(sig, frame):
     print('Bye Bye')
     sys.exit(0)
 
+
 # Get components from the config file
-
-
 def get_components():
     my_components = {}
     for key in componentDic:
@@ -31,7 +30,9 @@ def get_components():
             print("It's not a valid component")
     return my_components
 
-
+# Get the slowest and fastest poll rates in order to define
+# the cycle speed and the maximum number of cycles before resetting
+# the counter
 def get_max_min_poll_rate(my_components):
     max_rate = -1.0
     min_rate = 1000.0
@@ -44,13 +45,13 @@ def get_max_min_poll_rate(my_components):
 
     return max_rate, min_rate
 
-
-def update_loop_cycles(my_components, min_rate):
+# Update the number of cycles between measurements for
+# each component based on the loop speed
+def update_loop_cycles(my_components, loop_speed):
     for key, component in my_components.iteritems():
-        component.calculate_loop_cycles(min_rate)
+        component.calculate_loop_cycles(loop_speed)
 
 # Main behaviour
-
 
 def main():
     # Get components and setup CTRL+C handling
@@ -65,10 +66,9 @@ def main():
     max_rate, min_rate = get_max_min_poll_rate(my_components)
     max_loops = int(max_rate/min_rate)
     update_loop_cycles(my_components, min_rate)
-    print(max_rate, min_rate, max_loops)
+    print "Loop speed: {} || Maximum number of cycles {} ".format(min_rate, max_loops)
 
     loopcount = 0
-    loop_timer = 0
     # Get timestamp, call handle data for each component
     # sleep the rate - time_spent_on_loop
     while True:
@@ -77,20 +77,18 @@ def main():
 
         for key, component in my_components.iteritems():
             if component.loopCycles <= loopcount:
-                # p = threading.Thread(
-                #     target=component.handleData, args=(timestamp,))
-                # p.daemon = True
-                # p.start()
-                component.handleData(timestamp)
+                p = threading.Thread(
+                    target=component.handleData, args=(timestamp,))
+                p.daemon = True
+                p.start()
 
         loopcount += 1
-        loop_timer += time.time() - begin
         end = time.time()
+        # Prevents errors in case the loop takes too long
+        # Loop time is around 2ms with 2 components
         if (end-begin)< min_rate:
             time.sleep(min_rate-(end-begin))
         if loopcount > max_loops:
-            loop_timer = loop_timer/loopcount
-            print "Loop rate {} ||| Loop exec time avg {} ".format(min_rate,loop_timer)
             loopcount = 0
 
     sys.exit(0)
