@@ -29,6 +29,7 @@ class MqttClient(mqtt.Client):
         self.loop_start()
     
     def setup_client_azure(self):
+        self.device_id = iothub.device_id
         self.username_pw_set(username=iothub.iot_hub_name+".azure-devices.net/" + iothub.device_id + "/?api-version=2018-06-30", password=iothub.sas_token)
         self.tls_set(ca_certs=iothub.path_to_root_cert, certfile=None, keyfile=None, cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLSv1, ciphers=None)
         self.tls_insecure_set(False)
