@@ -41,28 +41,36 @@ def get_max_min_poll_rate(my_components):
         
     return max_rate,min_rate
 
-def calculate_loop_cycles(my_components,min_rate):
-   for component in my_components:
-       my_components[component].loopCycles = int(my_components[component].pollingRate / min_rate)
-       print(component , my_components[component].loopCycles)
+def update_loop_cycles(my_components,min_rate):
+   for key,component in my_components.iteritems():
+       component.calculate_loop_cycles(min_rate)
 
 # Main behaviour
 def main():
+    # Get components and setup CTRL+C handling
     signal.signal(signal.SIGINT, signal_handler)
     my_components = get_components()
     
+    # Get the sampling ratios of all components in order to
+    # define the cycle speed, the number of cycles 
+    # in between measurements for each component as well as
+    # the number of cycles of the slowest component in order
+    # to reset the counter
     max_rate,min_rate = get_max_min_poll_rate(my_components)
     max_loops = int(max_rate/min_rate)
-    calculate_loop_cycles(my_components,min_rate)
+    update_loop_cycles(my_components,min_rate)
     print(max_rate,min_rate,max_loops)
-    
+
     loopcount =0
+    # Get timestamp, call handle data for each component
+    # sleep the rate - time_spent_on_loop
     while True:
         begin = time.time()
         timestamp = int(begin*1000000) #microseconds
-        for component in my_components:
-            if my_components[component].loopCycles <= loopcount:
-                my_components[component].handleData(timestamp)
+        for key,component in my_components.iteritems():
+            if component.loopCycles <= loopcount:
+                threading.Thread(target=component.handleData,args=(timestamp,))
+                
         loopcount+=1
         time.sleep(min_rate-(begin-time.time()))
         if loopcount > max_loops:

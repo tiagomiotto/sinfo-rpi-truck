@@ -30,15 +30,6 @@ class TC(Component):
         self.mqttHandler.publish(self.my_topic, json.dumps(
             self.gen_payload_message(data,timestamp)))
 
-    # Specific run behaviour of this component
-    def run(self):
-        self.setup()
-        self.mqttHandler.publish(
-            (self.my_topic+"/pollRate"), self.poll_interval*1.0/1000.0, retain=True)
-        while True:
-            self.handleData()
-            time.sleep(self.poll_interval*1.0/1000.0)
-
     def gen_payload_message(self, data,timestamp):
         try:
             payload = {
