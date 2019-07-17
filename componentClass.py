@@ -38,5 +38,5 @@ class Component:
 
     # Calculate the number of loop cycles before sampling the 
     # sensor based on the rate the loop is run
-    def calculate_loop_cycles(self,loop_rate)
+    def calculate_loop_cycles(self,loop_rate):
         self.loopCycles = int(self.pollingRate / loopRate)
