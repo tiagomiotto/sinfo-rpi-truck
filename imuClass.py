@@ -50,7 +50,7 @@ class Imu(Component):
         # In this case the sampling rate is 100Hz and we are sampling every 
         # 1.2/100Hz= 12ms
         self.pollingRate = 1.0/(400/self.imu.IMUGetPollInterval())*1.2
-        self.my_topic= "devices/" + mqttHandler.device_id + "/messages/events/"
+        self.my_topic= "devices/" + self.mqttHandler.device_id + "/messages/events/"
         #self.set_topic("imu")
 
         print "{} setup finished".format(self.name)
