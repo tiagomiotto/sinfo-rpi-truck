@@ -90,6 +90,7 @@ def main():
 
         for key, component in my_components.iteritems():
             if component.loopCycles <= loopcount:
+                print "Acquiring data from {}".format(key)
                 p = threading.Thread(
                     target=component.handleData, args=(timestamp,))
                 p.daemon = True
