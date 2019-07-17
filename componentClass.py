@@ -1,4 +1,5 @@
 from mqttClient import MqttClient
+from paho.mqtt import client as mqtt
 from abc import ABCMeta, abstractmethod
 from config import azureconfiguration as iothub
 import sys,signal
@@ -10,7 +11,7 @@ class Component:
     __metaclass__ = ABCMeta
 
     def __init__(self,root):
-        self.mqttHandler = MqttClient(client_id=iothub.device_id)
+        self.mqttHandler = MqttClient(client_id=iothub.device_id, protocol=mqtt.MQTTv311)
         self.mqttHandler.setup_client_azure()
 
         self.name= "component"
