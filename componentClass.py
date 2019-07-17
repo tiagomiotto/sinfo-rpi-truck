@@ -9,7 +9,7 @@ class Component:
     __metaclass__ = ABCMeta
 
     def __init__(self,root):
-        self.mqttHandler = MqttClient()
+        self.mqttHandler = MqttClient(client_id=device_id, protocol=mqtt.MQTTv311)
         self.mqttHandler.setup_client_azure()
 
         self.name= "component"
