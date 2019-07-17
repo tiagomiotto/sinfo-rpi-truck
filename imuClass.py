@@ -60,7 +60,9 @@ class Imu(Component):
     def handleData(self, timestamp):
         if self.imu.IMURead():
             data = self.imu.getIMUData()
-            self.mqttHandler.publish(self.my_topic, json.dumps(self.gen_payload_message(data,timestamp)),retain=True)
+            print "Publishing data"
+            self.mqttHandler.publish(self.my_topic, json.dumps(self.gen_payload_message(data,timestamp)),retain=True, qos=1)
+            print "Published data"
 
     # Generates the payload specific to the IMU
     def gen_payload_message(self, data,timestamp):
