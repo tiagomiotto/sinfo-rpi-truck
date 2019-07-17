@@ -20,11 +20,11 @@ def get_components():
         # Imports the name of the class and creates an object
         mod = __import__(key, fromlist=[componentDic.get(key)])
         klass = getattr(mod, componentDic.get(key))
-        aux_component = klass()
+        aux_component = klass(rootTopic)
 
         # Ignores objects which are not Components
         if isinstance(aux_component, Component):
-            my_components[key] = klass(rootTopic)
+            my_components[key] = aux_component
             my_components[key].setup()
 
             # The use of threads here is mainly in the case of components that should
