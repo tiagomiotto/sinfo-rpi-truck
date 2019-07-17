@@ -82,17 +82,27 @@ In this repository you can find the [configuration file](config/configuration.py
 
 
 ---
+
 ### Setting up new components
 
-New components can be easily set up by implementing the [componentClass](componentClass.py) which provides the constructor and the mqttHandler for communication with the broker using the methods provided by the [Paho-MQTT Library](https://pypi.org/project/paho-mqtt/) by the Eclipse foundation.   
+New components can be easily set up by implementing the [componentClass](componentClass.py) which provides the constructor and the mqttHandler for communication with the broker using the methods provided by the [Paho-MQTT Library](https://pypi.org/project/paho-mqtt/) by the Eclipse foundation.
 
-Although only the **run** method is necessary for the main to function, the idea is to use the **setup** method for specific device setup operations, the **dataHandling** method to acquire and publish data from the component, and the **run** method to control the running loop.
+In order for the components to work correctly with the proposed system, you are required to implement the **setup** method and one of the methods described below:
+
+#### Data acquisition components
+
+If your component is suposed to acquire data from a sensor and relay it to the network using MQTT, you should implement the **acquireData** method, which will be called according to the polling rate defined on the component. Furthermore it would be useful to create a structure for the payload by implementing the **gen_payload_message** method.
 
 For an example of this implementation check the [imuClass](imuClass.py)
+
+#### Parallel streaming components
+
+If your component is supposed to run on a parallel loop, such as a camera streaming video over the internet, you shoudl include the necessary code in the **run** method. The [main.py](main.py) will then spawn a new thread solelly to run this method.
 
 ![ComponentsDiagram](images/Components.png)
 
 #### MQTT topics framework
+
 In order to maintain consistency, all new topics should follow the framework:
 ```
 project/component
@@ -124,8 +134,9 @@ And the [main.py](main.py) will import it, create the object and invoke the **ru
 
 **Note:** The effect this has on reading several sensors has yet to be tested, although it shouldn't be a problem due to the quad core nature of the Rpi3B+.
 
+#### The components topic:
 
-
+The [componentClass](componentClass.py) provides a method to publish a JSON with information related to the configuration of the component to the topic **root/components**. This method is called after they are setup in the [main.py](main.py), so you can check the information for all the current components running on that system by subscribing to that topic.
 
 ---
 ### Setting up the IMU data streamming

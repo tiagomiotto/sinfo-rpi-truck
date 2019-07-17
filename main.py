@@ -1,4 +1,4 @@
-from config.configuration import componentDic
+from config.configuration import componentDic, rootTopic
 from componentClass import Component
 import multiprocessing as mp
 import threading
@@ -24,7 +24,7 @@ def get_components():
 
         # Ignores objects which are not Components
         if isinstance(aux_component, Component):
-            my_components[key] = klass()
+            my_components[key] = klass(rootTopic)
             my_components[key].setup()
 
             # The use of threads here is mainly in the case of components that should

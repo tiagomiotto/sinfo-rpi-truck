@@ -8,7 +8,7 @@ class Component:
 
     __metaclass__ = ABCMeta
 
-    def __init__(self):
+    def __init__(self,root):
         self.mqttHandler = MqttClient()
         self.mqttHandler.setup_client()
 
@@ -16,7 +16,9 @@ class Component:
         self.pollingRate = 1
         self.loopCycles = 1
         self.loopRate = 1
-        self.my_topic = "truck1/component"
+        self.my_topic = ""
+        self.rootTopic = root
+        self.config_topic = self.rootTopic + "/components"
 
         
     # Component specific setup 
@@ -33,7 +35,6 @@ class Component:
     # in order to ensure coherence between components.
     #
     # Needs to be implemented in order for the main to run correctly
-    @abstractmethod
     def handleData(self,timestamp):
         pass
     
@@ -62,7 +63,7 @@ class Component:
     # Publish component configuration values to the
     # root/component/config topic
     def publishConfiguration(self,timestamp):
-        self.mqttHandler.publish(self.my_topic+"/config", json.dumps(
+        self.mqttHandler.publish(self.config_topic, json.dumps(
             self.gen_curr_configuration_message(timestamp)), retain=True)
     
 
