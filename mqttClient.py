@@ -33,3 +33,4 @@ class MqttClient(mqtt.Client):
         self.tls_set(ca_certs=iothub.path_to_root_cert, certfile=None, keyfile=None, cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLSv1, ciphers=None)
         self.tls_insecure_set(False)
         self.connect(iothub.iot_hub_name+".azure-devices.net", port=8883)
+        self.loop_start()
