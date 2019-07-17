@@ -97,7 +97,7 @@ For an example of this implementation check the [imuClass](imuClass.py)
 
 #### Parallel streaming components
 
-If your component is supposed to run on a parallel loop, such as a camera streaming video over the internet, you shoudl include the necessary code in the **run** method. The [main.py](main.py) will then spawn a new thread solelly to run this method.
+If your component is supposed to run on a parallel loop, such as a camera streaming video over the internet, you should include the necessary code in the **run** method. The [main.py](main.py) will then spawn a new thread solelly to run your components run code.
 
 ![ComponentsDiagram](images/Components.png)
 
@@ -122,6 +122,8 @@ Eg. truck1/imu : JSON payload containing the data given by the IMU in truck1.
     'timestamp': "Timestamp of the measurement"
 }   
 ```
+
+Which is made easier by the fact that the componentClass receives the root topic during initialization and exposes the method **set_topic** to be called during the component setup, in order to set the name and formulate the topic for that component.
 
 #### Adding the components to the system
 
