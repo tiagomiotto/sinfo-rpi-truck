@@ -13,6 +13,8 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 # Get components from the config file
+
+
 def get_components():
     my_components = {}
     for key in componentDic:
@@ -29,6 +31,7 @@ def get_components():
             print("It's not a valid component")
     return my_components
 
+
 def get_max_min_poll_rate(my_components):
     max_rate = -1.0
     min_rate = 1000.0
@@ -38,51 +41,55 @@ def get_max_min_poll_rate(my_components):
 
         if my_components[component].pollingRate >= max_rate:
             max_rate = my_components[component].pollingRate
-        
-    return max_rate,min_rate
 
-def update_loop_cycles(my_components,min_rate):
-   for key,component in my_components.iteritems():
-       component.calculate_loop_cycles(min_rate)
+    return max_rate, min_rate
+
+
+def update_loop_cycles(my_components, min_rate):
+    for key, component in my_components.iteritems():
+        component.calculate_loop_cycles(min_rate)
 
 # Main behaviour
+
+
 def main():
     # Get components and setup CTRL+C handling
     signal.signal(signal.SIGINT, signal_handler)
     my_components = get_components()
-    
+
     # Get the sampling ratios of all components in order to
-    # define the cycle speed, the number of cycles 
+    # define the cycle speed, the number of cycles
     # in between measurements for each component as well as
     # the number of cycles of the slowest component in order
     # to reset the counter
-    max_rate,min_rate = get_max_min_poll_rate(my_components)
+    max_rate, min_rate = get_max_min_poll_rate(my_components)
     max_loops = int(max_rate/min_rate)
-    update_loop_cycles(my_components,min_rate)
-    print(max_rate,min_rate,max_loops)
+    update_loop_cycles(my_components, min_rate)
+    print(max_rate, min_rate, max_loops)
 
-    loopcount =0
+    loopcount = 0
     loop_timer = 0
     # Get timestamp, call handle data for each component
     # sleep the rate - time_spent_on_loop
     while True:
         begin = time.time()
-        timestamp = int(begin*1000000) #microseconds
+        timestamp = int(begin*1000000)  # microseconds
 
-        for key,component in my_components.iteritems():
+        for key, component in my_components.iteritems():
             if component.loopCycles <= loopcount:
-                p=threading.Thread(target=component.handleData,args=(timestamp,))
+                p = threading.Thread(
+                    target=component.handleData, args=(timestamp,))
                 p.daemon = True
                 p.start()
 
-        loopcount+=1
-        loop_timer+=begin-time.time()
-        loop_timer=loop_timer/2
-        time.sleep(min_rate-(begin-time.time()))
+        loopcount += 1
+        loop_timer += time.time() - begin
+        
+        time.sleep(min_rate-(time.time()-begin))
         if loopcount > max_loops:
+            loop_timer = loop_timer/loopcount
             print "Loop timer avg {} ".format(loop_timer)
-            loopcount=0
-
+            loopcount = 0
 
     sys.exit(0)
 
