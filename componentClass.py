@@ -1,7 +1,7 @@
 from mqttClient import MqttClient
 from abc import ABCMeta, abstractmethod
 import sys,signal
-
+import json
 
 class Component:
 
@@ -13,6 +13,9 @@ class Component:
 
         self.pollingRate = 1
         self.loopCycles = 1
+        self.loopRate = 1
+        self.my_topic = "truck1/component"
+
         
     # Component specific setup 
     # Needs to contain all the code to be executed once 
@@ -37,6 +40,25 @@ class Component:
         pass
 
     # Calculate the number of loop cycles before sampling the 
-    # sensor based on the rate the loop is run
-    def calculate_loop_cycles(self,loop_rate):
-        self.loopCycles = int(self.pollingRate / loop_rate)
+    # sensor based on the rate the loop is run and publish
+    # the new configuration parameters of the component
+    def calculate_loop_cycles(self,loop_rate,timestamp):
+        self.loopRate = loop_rate
+        self.loopCycles = int(self.pollingRate / self.loopRate)
+        self.publishConfiguration(timestamp)
+
+    # Publish component configuration values to the
+    # root/component/config topic
+    def publishConfiguration(self,timestamp):
+        self.mqttHandler.publish(self.my_topic+"/config", json.dumps(
+            self.gen_curr_configuration_message(timestamp)), retain=True)
+    
+    # Generate current configuration message
+    def gen_curr_configuration_message(self,timestamp):
+       return {
+           'topic': self.my_topic,
+           'pollRate': self.pollingRate,
+           'loopRate': self.loopRate,
+           'cycles': self.loopCycles,
+           'timestamp': timestamp
+       }

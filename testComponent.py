@@ -22,13 +22,13 @@ class TC(Component):
         print("Started test")
         # Used to set up the polling interval of the sensor
         self.poll_interval = 0.12
-        self.my_topic = "truck1/test"
+        self.my_topic = "truck1/testcomponent"
 
     # Data Handling for this specific device, from collection to publishing to the correct MQTT Topics.
     def handleData(self,timestamp):
         data = {"accel": (0, 1, 2), "gyro": (0, 1, 2), "timestamp": 123445}
         self.mqttHandler.publish(self.my_topic, json.dumps(
-            self.gen_payload_message(data,timestamp)))
+            self.gen_payload_message(data,timestamp)), retain=True)
 
     def gen_payload_message(self, data,timestamp):
         try:
