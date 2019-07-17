@@ -45,7 +45,7 @@ class Component:
     def calculate_loop_cycles(self,loop_rate,timestamp):
         self.loopRate = loop_rate
         self.loopCycles = int(self.pollingRate / self.loopRate)
-        self.publishConfiguration(timestamp)
+        self.publishConfiguration(int(timestamp))
 
     # Publish component configuration values to the
     # root/component/config topic
