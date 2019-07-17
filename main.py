@@ -88,7 +88,7 @@ def main():
         time.sleep(min_rate-(time.time()-begin))
         if loopcount > max_loops:
             loop_timer = loop_timer/loopcount
-            print "Loop timer avg {} ".format(loop_timer)
+            print "Loop rate {} ||| Loop exec time avg {} ".format(min_rate,loop_timer)
             loopcount = 0
 
     sys.exit(0)
