@@ -1,7 +1,7 @@
 # Introduction
 This repo contains a framework to extract data acquired from sensors connected to a Rpi, using the MQTT protocol, as well as provide an easy way to access those data points using a REST API.
 
-For this example we are using a remote control LEGO Truck (Mercedes-Benz Arocs) in conjuction with a RPI connected to an Innertial Measurement Unit(IMU), a Camera module and a Sonar Sensor Module.
+For this example we are using a remote control LEGO Truck (Mercedes-Benz Arocs) in conjunction with a RPI connected to an Inertial Measurement Unit(IMU), a Camera module and a Sonar Sensor Module.
 
 ![Example Diagram](images/DaimlerTruckCurrent.png)
 
@@ -91,13 +91,13 @@ In order for the components to work correctly with the proposed system, you are 
 
 #### Data acquisition components
 
-If your component is suposed to acquire data from a sensor and relay it to the network using MQTT, you should implement the **acquireData** method, which will be called according to the polling rate defined on the component. Furthermore it would be useful to create a structure for the payload by implementing the **gen_payload_message** method.
+If your component is supposed to acquire data from a sensor and relay it to the network using MQTT, you should implement the **acquireData** method, which will be called according to the polling rate defined on the component. Furthermore it would be useful to create a structure for the payload by implementing the **gen_payload_message** method.
 
 For an example of this implementation check the [imuClass](imuClass.py)
 
 #### Parallel streaming components
 
-If your component is supposed to run on a parallel loop, such as a camera streaming video over the internet, you should include the necessary code in the **run** method. The [main.py](main.py) will then spawn a new thread solelly to run your components run code.
+If your component is supposed to run on a parallel loop, such as a camera streaming video over the internet, you should include the necessary code in the **run** method. The [main.py](main.py) will then spawn a new thread to execute your components run code.
 
 ![ComponentsDiagram](images/Components.png)
 
@@ -127,7 +127,7 @@ Which is made easier by the fact that the componentClass receives the root topic
 
 #### Adding the components to the system
 
-After the compnent has been set up and tested on its own, you can run it in parallel to the other components by simply altering the **componentDic** on the [configuration](config/configuration.py) file, as so:
+After the component has been set up and tested on its own, you can run it in parallel to the other components by simply altering the **componentDic** on the [configuration](config/configuration.py) file, as so:
 
 ```
 componentDic = {"imuClass" : "Imu", "Name Of The File", "Name Of The Class"}
@@ -278,7 +278,7 @@ Other apps are available in `/RTIMULib2/Linux/`. Check out its repo for descript
 
 
 #### Step 4: Streamming the IMU data
-To begin streamming the IMU data to the MQTT broker, run the [imuClass.py](imuClass.py).
+To begin streaming the IMU data to the MQTT broker, run the [imuClass.py](imuClass.py).
 In this case the data will be published to the topic **/truck1/imu** with the following format:
 ```
 {
@@ -389,4 +389,4 @@ Review [the contributing guidelines](CONTRIBUTING.md) before you make your aweso
 ---
 ### License
 
-This project is licensed under the terms of the MIT license. See [LICENSE](LICENSE) 
+This project is licensed under the terms of the MIT license. See [LICENSE](LICENSE)]
