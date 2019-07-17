@@ -77,7 +77,9 @@ class Imu(Component):
                     'z': data.get('gyro')[2]
                 },
                 # Note: This is a UNIX timestamp in microseconds
-                'timestamp': timestamp
+                'timestamp': data.get('timestamp')
+
+                #'timestamp': timestamp
             }
         except: 
             print("Received wrong data structure")
