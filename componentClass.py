@@ -16,9 +16,9 @@ class Component:
         self.pollingRate = 1
         self.loopCycles = 1
         self.loopRate = 1
-        self.my_topic = ""
         self.rootTopic = root
         self.config_topic = self.rootTopic + "/components"
+        self.my_topic = self.rootTopic + "/" + self.name
 
         
     # Component specific setup 
