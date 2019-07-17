@@ -49,7 +49,7 @@ def get_max_min_poll_rate(my_components):
 # each component based on the loop speed
 def update_loop_cycles(my_components, loop_speed,timestamp):
     for key, component in my_components.iteritems():
-        component.calculate_loop_cycles(loop_speed)
+        component.calculate_loop_cycles(loop_speed,timestamp)
 
 # Main behaviour
 
