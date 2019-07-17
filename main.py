@@ -62,12 +62,13 @@ def main():
     print(max_rate,min_rate,max_loops)
 
     loopcount =0
+    loop_timer = 0
     # Get timestamp, call handle data for each component
     # sleep the rate - time_spent_on_loop
     while True:
         begin = time.time()
         timestamp = int(begin*1000000) #microseconds
-        
+
         for key,component in my_components.iteritems():
             if component.loopCycles <= loopcount:
                 p=threading.Thread(target=component.handleData,args=(timestamp,))
@@ -75,9 +76,13 @@ def main():
                 p.start()
 
         loopcount+=1
+        loop_timer+=begin-time.time()
+        loop_timer=loop_timer/2
         time.sleep(min_rate-(begin-time.time()))
         if loopcount > max_loops:
+            print "Loop timer avg {} ".format(loop_timer)
             loopcount=0
+
 
     sys.exit(0)
 
