@@ -21,14 +21,25 @@ def get_components():
         mod = __import__(key, fromlist=[componentDic.get(key)])
         klass = getattr(mod, componentDic.get(key))
         aux_component = klass()
+
         # Ignores objects which are not Components
         if isinstance(aux_component, Component):
             my_components[key] = klass()
-            my_components[key].setup()
+
+            # The use of threads here is mainly in the case of components that should
+            # run in a parallel loop, such as the camera, and they can do so in
+            # their setup
+            # Otherwise, in the case of data acquiring components, there should be no loops
+            # in the setup
+            p = threading.Thread(
+                target=my_components[key].setup)
+            p.daemon = True
+            p.start()
 
         else:
             print("It's not a valid component")
     return my_components
+
 
 # Get the slowest and fastest poll rates in order to define
 # the cycle speed and the maximum number of cycles before resetting
@@ -45,14 +56,15 @@ def get_max_min_poll_rate(my_components):
 
     return max_rate, min_rate
 
+
 # Update the number of cycles between measurements for
 # each component based on the loop speed
-def update_loop_cycles(my_components, loop_speed,timestamp):
+def update_loop_cycles(my_components, loop_speed, timestamp):
     for key, component in my_components.iteritems():
-        component.calculate_loop_cycles(loop_speed,timestamp)
+        component.calculate_loop_cycles(loop_speed, timestamp)
+
 
 # Main behaviour
-
 def main():
     # Get components and setup CTRL+C handling
     signal.signal(signal.SIGINT, signal_handler)
@@ -66,7 +78,8 @@ def main():
     max_rate, min_rate = get_max_min_poll_rate(my_components)
     max_loops = int(max_rate/min_rate)
     update_loop_cycles(my_components, min_rate, time.time()*1000000)
-    print "Loop speed: {} || Maximum number of cycles {} ".format(min_rate, max_loops)
+    print "Loop speed: {} || Maximum number of cycles {} ".format(
+        min_rate, max_loops)
 
     loopcount = 0
     # Get timestamp, call handle data for each component
@@ -86,7 +99,7 @@ def main():
         end = time.time()
         # Prevents errors in case the loop takes too long
         # Loop time is around 2ms with 2 components
-        if (end-begin)< min_rate:
+        if (end-begin) < min_rate:
             time.sleep(min_rate-(end-begin))
         if loopcount > max_loops:
             loopcount = 0

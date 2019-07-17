@@ -19,10 +19,11 @@ class TC(Component):
 
     # Setup method for this specific device
     def setup(self):
-        print("Started test")
         # Used to set up the polling interval of the sensor
         self.poll_interval = 0.12
         self.my_topic = "truck1/testcomponent"
+        self.name = "testcomponent"
+        print "{} setup finished".format(self.name)
 
     # Data Handling for this specific device, from collection to publishing to the correct MQTT Topics.
     def handleData(self,timestamp):

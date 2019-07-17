@@ -11,6 +11,7 @@ class Component:
         self.mqttHandler = MqttClient()
         self.mqttHandler.setup_client()
 
+        self.name= "component"
         self.pollingRate = 1
         self.loopCycles = 1
         self.loopRate = 1

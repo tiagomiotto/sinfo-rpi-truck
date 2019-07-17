@@ -51,6 +51,9 @@ class Imu(Component):
         # 1.2/100Hz= 12ms
         self.pollingRate = 1.0/(400/self.imu.IMUGetPollInterval())*1.2
         self.my_topic = "truck1/imu"
+        self.name = "imu"
+
+        print "{} setup finished".format(self.name)
 
     # Data Handling for this specific device, from collection to 
     # publishing to the correct MQTT Topics.
