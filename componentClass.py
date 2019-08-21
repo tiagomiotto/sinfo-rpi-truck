@@ -71,7 +71,7 @@ class Component:
         return {
             'name': self.name,
             'topic': self.my_topic,
-            'pollRate': self.sampInterval,
+            'pollRate': float(self.sampInterval),
             'loopRate': self.loopRate,
             'cycles': self.loopCycles,
             'timestamp': timestamp
