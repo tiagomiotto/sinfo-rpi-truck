@@ -25,7 +25,7 @@ class Component:
     # before the loop starts
     # Needs to be implemented in order for the main to run correctly
     @abstractmethod
-    def setup(self):
+    def setup(self,samplingInterval):
         pass
 
     # Component specific data handling and MQTT publishing
