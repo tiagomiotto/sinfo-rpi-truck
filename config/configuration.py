@@ -16,7 +16,7 @@ componentDic = {
     "proximityClass": "ProximitySensor",
     "motorClass": "Motor",
     "cameraClass": "Camera"}
-# Has to be float
+
 componentsSamplingIntevalInSeconds = {
     "imuClass": 0.1,
     "proximityClass": 0.4,

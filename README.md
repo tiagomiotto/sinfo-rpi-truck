@@ -143,7 +143,7 @@ Which is made easier by the fact that the componentClass receives the root topic
 
 #### Adding the components to the system
 
-After the component has been set up and tested on its own, you can run it in parallel to the other components by simply altering the **componentDic** and adding its sampling rate in seconds, as a **float**, on the [configuration](config/configuration.py) file, as so:
+After the component has been set up and tested on its own, you can run it in parallel to the other components by simply altering the **componentDic** and adding its sampling rate in seconds on the [configuration](config/configuration.py) file, as so:
 
 ```python
 componentDic = {"imuClass" : "Imu", "Name Of The File", "Name Of The Class"}
